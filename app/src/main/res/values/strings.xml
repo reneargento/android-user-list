@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">RandomUser</string>
+    <string name="image_description">Profile Image</string>
+    <string name="name">%1$s %2$s</string>
+</resources>

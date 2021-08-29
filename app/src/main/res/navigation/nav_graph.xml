@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/UserListFragment">
+
+    <fragment
+        android:id="@+id/UserListFragment"
+        android:name="com.random.user.view.UserListFragment"
+        tools:layout="@layout/user_list_fragment">
+
+        <action
+            android:id="@+id/action_UserListFragment_to_UserDetailsFragment"
+            app:destination="@+id/UserDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/UserDetailsFragment"
+        android:name="com.random.user.view.UserDetailsFragment"
+        tools:layout="@layout/user_details_fragment">
+        <argument
+            android:name="latitude"
+            app:argType="float"
+            android:defaultValue="0" />
+        <argument
+            android:name="longitude"
+            app:argType="float"
+            android:defaultValue="0" />
+    </fragment>
+</navigation>
