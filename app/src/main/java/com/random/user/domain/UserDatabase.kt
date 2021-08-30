@@ -50,12 +50,10 @@ interface UserDao {
     val userLiveData: LiveData<List<User>?>
 
     @Query("SELECT * FROM User " +
-            "WHERE name LIKE :name || '%' " +
-            "OR surname LIKE :surname || '%' " +
-            "OR email LIKE :email || '%'")
-    fun userFilterLiveData(name: String,
-                           surname: String,
-                           email: String): LiveData<List<User>?>
+            "WHERE name LIKE :filter || '%' " +
+            "OR surname LIKE :filter || '%' " +
+            "OR email LIKE :filter || '%'")
+    fun userFilterLiveData(filter: String): LiveData<List<User>?>
 
     @Query("delete from User where email = :email")
     suspend fun deleteUser(email: String)

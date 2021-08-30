@@ -2,7 +2,6 @@ package com.random.user.domain
 
 import androidx.lifecycle.LiveData
 import com.random.user.model.UserFetchError
-import com.random.user.model.UserFilterRequest
 import kotlinx.coroutines.withTimeout
 
 class UserRepository(
@@ -30,9 +29,6 @@ class UserRepository(
         userDao.deleteUser(email)
     }
 
-    fun usersFilterLiveData(userFilterRequest: UserFilterRequest): LiveData<List<User>?> =
-        userDao.userFilterLiveData(userFilterRequest.name,
-            userFilterRequest.surname,
-            userFilterRequest.email
-        )
+    fun usersFilterLiveData(filter: String): LiveData<List<User>?> =
+        userDao.userFilterLiveData(filter)
 }

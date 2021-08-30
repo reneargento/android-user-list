@@ -1,6 +1,7 @@
 package com.random.user.view.user.list
 
 import androidx.lifecycle.*
+import com.random.user.domain.User
 import com.random.user.domain.UserDataStore
 import com.random.user.domain.UserRepository
 import com.random.user.model.UserFetchError
@@ -20,6 +21,13 @@ class UserListViewModel(private val repository: UserRepository,
     }
 
     val userLiveData = repository.userLiveData
+
+    private val filteredUsersLiveData: MutableLiveData<String> = MutableLiveData()
+
+    val filteredUsersLiveDataObservable: LiveData<List<User>> =
+        Transformations.switchMap(filteredUsersLiveData) { text ->
+            repository.usersFilterLiveData(text)
+    }
 
     private val spinner = MutableLiveData(false)
     val spinnerLiveData: LiveData<Boolean>
@@ -61,5 +69,9 @@ class UserListViewModel(private val repository: UserRepository,
                 spinner.value = false
             }
         }
+    }
+
+    fun filterUsers(filter: String) {
+        filteredUsersLiveData.value = filter
     }
 }

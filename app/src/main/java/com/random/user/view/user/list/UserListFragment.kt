@@ -18,6 +18,7 @@ import com.random.user.domain.UserDataStore
 import com.random.user.domain.UserRepository
 import com.random.user.domain.getDatabase
 import com.random.user.domain.getNetworkService
+import com.random.user.util.afterTextChanged
 import com.random.user.view.user.details.UserDetailsFragment
 
 class UserListFragment : Fragment() {
@@ -46,6 +47,7 @@ class UserListFragment : Fragment() {
 
     private fun initViewModel() {
         initRecyclerView()
+        val mapper = UserDaoToViewMapper()
 
         viewModel.spinnerLiveData.observe(viewLifecycleOwner) { value ->
             value.let { show ->
@@ -58,11 +60,16 @@ class UserListFragment : Fragment() {
                 viewModel.onSnackBarShown()
             }
         }
-
         viewModel.userLiveData.observe(viewLifecycleOwner) { userList ->
-            val mapper = UserDaoToViewMapper()
             userList?.let {
-                (binding.userList.adapter as UserAdapter).addItems(
+                (binding.userList.adapter as UserAdapter).updateItems(
+                    userList.map { mapper.userDaoToView(it, requireContext()) }
+                )
+            }
+        }
+        viewModel.filteredUsersLiveDataObservable.observe(viewLifecycleOwner) {  userList ->
+            userList?.let {
+                (binding.userList.adapter as UserAdapter).updateItems(
                     userList.map { mapper.userDaoToView(it, requireContext()) }
                 )
             }
@@ -70,11 +77,16 @@ class UserListFragment : Fragment() {
 
         binding.userList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (!recyclerView.canScrollVertically(1)) {
+                if (binding.search.text.isNullOrEmpty()
+                    && !recyclerView.canScrollVertically(1)) {
                     viewModel.fetchUsers()
                 }
             }
         })
+        binding.search.afterTextChanged { filter ->
+            viewModel.filterUsers(filter)
+        }
+
         viewModel.fetchUsers()
     }
 

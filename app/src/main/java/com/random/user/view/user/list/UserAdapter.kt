@@ -26,7 +26,7 @@ class UserAdapter(
 
     override fun getItemCount() = userList.size
 
-    fun addItems(users: List<UserView>) {
+    fun updateItems(users: List<UserView>) {
         userList = users.toMutableList()
         notifyDataSetChanged()
     }
