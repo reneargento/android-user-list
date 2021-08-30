@@ -25,7 +25,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         app:layout_constraintStart_toEndOf="@id/image"
-        app:layout_constraintTop_toTopOf="@id/image" />
+        app:layout_constraintTop_toTopOf="@id/image"
+        tools:text="Rene Argento" />
 
     <TextView
         android:id="@+id/email"
@@ -34,7 +35,8 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintTop_toBottomOf="@+id/name"
-        app:layout_constraintStart_toStartOf="@id/name" />
+        app:layout_constraintStart_toStartOf="@id/name"
+        tools:text="r.a@email.com" />
 
     <TextView
         android:id="@+id/phone"
@@ -43,6 +45,18 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintTop_toBottomOf="@+id/email"
-        app:layout_constraintStart_toStartOf="@id/name" />
+        app:layout_constraintStart_toStartOf="@id/name"
+        tools:text="12345678" />
+
+    <ImageButton
+        android:id="@+id/delete_user"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:src="@mipmap/ic_delete_foreground"
+        android:contentDescription="@string/delete_description" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
