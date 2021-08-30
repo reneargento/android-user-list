@@ -39,7 +39,7 @@ data class User constructor(
     val registered: String,
     val phone: String,
     val pictureLarge: String,
-    val pictureThumbnail: String)
+    val pictureMedium: String)
 
 @Dao
 interface UserDao {

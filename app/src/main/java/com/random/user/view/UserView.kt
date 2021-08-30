@@ -11,5 +11,5 @@ class UserView(
     val registered: String,
     val phone: String,
     val pictureLarge: String,
-    val pictureThumbnail: String
+    val pictureMedium: String
 )

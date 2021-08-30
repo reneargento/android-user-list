@@ -14,6 +14,6 @@ class UserDaoToViewMapper {
         user.registered,
         user.phone,
         user.pictureLarge,
-        user.pictureThumbnail
+        user.pictureMedium
     )
 }

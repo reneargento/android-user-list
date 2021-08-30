@@ -14,7 +14,7 @@ class UserEntityToDaoMapper {
         userEntity.registered.date,
         userEntity.phone,
         userEntity.picture.large,
-        userEntity.picture.thumbnail
+        userEntity.picture.medium
     )
 
     private fun computeStreet(streetNumber: Int, streetName: String) = "$streetNumber $streetName"
