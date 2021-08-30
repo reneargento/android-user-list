@@ -1,4 +1,4 @@
-package com.random.user.view
+package com.random.user.view.user.list
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,11 +18,11 @@ import com.random.user.domain.UserDataStore
 import com.random.user.domain.UserRepository
 import com.random.user.domain.getDatabase
 import com.random.user.domain.getNetworkService
+import com.random.user.view.user.details.UserDetailsFragment
 
 class UserListFragment : Fragment() {
 
     private var _binding: UserListFragmentBinding? = null
-
     private val binding get() = _binding!!
 
     private val viewModel: UserListViewModel by viewModels {
@@ -63,7 +63,7 @@ class UserListFragment : Fragment() {
             val mapper = UserDaoToViewMapper()
             userList?.let {
                 (binding.userList.adapter as UserAdapter).addItems(
-                    userList.map { mapper.userDaoToView(it) }
+                    userList.map { mapper.userDaoToView(it, requireContext()) }
                 )
             }
         }
@@ -83,15 +83,18 @@ class UserListFragment : Fragment() {
             onItemClickListener = object : OnItemClickListener {
                 override fun onItemClick(user: UserView) {
                     val bundle = bundleOf(
-//                                MapViewModel.LATITUDE_PARAM to vehicle.latitude,
-//                                MapViewModel.LONGITUDE_PARAM to vehicle.longitude
+                        UserDetailsFragment.NAME_PARAM to user.fullName,
+                        UserDetailsFragment.GENDER_PARAM to user.gender,
+                        UserDetailsFragment.ADDRESS_PARAM to user.address,
+                        UserDetailsFragment.REGISTERED_DATE_PARAM to user.registered,
+                        UserDetailsFragment.EMAIL_PARAM to user.email,
+                        UserDetailsFragment.PICTURE_PARAM to user.pictureLarge,
                     )
                     findNavController().navigate(R.id.action_UserListFragment_to_UserDetailsFragment, bundle)
                 }
             },
             onUserDeletedListener = object : OnUserDeletedListener {
                 override fun onUserDeleted(email: String) {
-                 //   (binding.userList.adapter as UserAdapter).deleteUser(email)
                     viewModel.deleteUser(email)
                 }
             }

@@ -1,4 +1,4 @@
-package com.random.user.view
+package com.random.user.view.user.list
 
 import androidx.lifecycle.*
 import com.random.user.domain.UserDataStore
@@ -7,7 +7,6 @@ import com.random.user.model.UserFetchError
 import com.random.user.util.viewModelFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 

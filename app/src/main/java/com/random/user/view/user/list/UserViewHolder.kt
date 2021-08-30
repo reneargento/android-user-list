@@ -1,4 +1,4 @@
-package com.random.user.view
+package com.random.user.view.user.list
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
@@ -8,13 +8,14 @@ import com.random.user.databinding.UserContentBinding
 
 class UserViewHolder(
     root: View,
-    private val onUserDeletedListener: OnUserDeletedListener) : RecyclerView.ViewHolder(root) {
+    private val onUserDeletedListener: OnUserDeletedListener
+) : RecyclerView.ViewHolder(root) {
 
     private val vehicleViewBinding = UserContentBinding.bind(root)
 
     fun bindData(userView: UserView) {
         with(vehicleViewBinding) {
-            name.text = root.context.getString(R.string.name, userView.name, userView.surname)
+            name.text = userView.fullName
             email.text = userView.email
             phone.text = userView.phone
             deleteUser.setOnClickListener {

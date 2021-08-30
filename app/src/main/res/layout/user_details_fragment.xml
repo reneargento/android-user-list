@@ -3,8 +3,99 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:scaleType="fitCenter"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="@+id/guideline"
+        android:contentDescription="@string/image_description"
+        tools:src="@mipmap/ic_placeholder" />
 
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@id/image"
+        android:textStyle="bold"
+        tools:text="Rene Argento" />
+
+    <TextView
+        android:id="@+id/email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/name"
+        tools:text="r.a@email.com" />
+
+    <TextView
+        android:id="@+id/gender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/name"
+        tools:text="Male" />
+
+    <TextView
+        android:id="@+id/address_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/email"
+        android:textStyle="bold"
+        android:text="@string/address_text"
+        tools:text="Address:" />
+
+    <TextView
+        android:id="@+id/address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@id/address_text"
+        app:layout_constraintTop_toTopOf="@id/address_text"
+        tools:text="Street 1, Barcelona, Spain" />
+
+    <TextView
+        android:id="@+id/registered_date_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/address"
+        android:text="@string/registered_date_text"
+        android:textStyle="bold"
+        tools:text="Registered Date: " />
+
+    <TextView
+        android:id="@+id/registered_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@id/registered_date_text"
+        app:layout_constraintTop_toTopOf="@id/registered_date_text"
+        tools:text="2021-08-30" />
 </androidx.constraintlayout.widget.ConstraintLayout>

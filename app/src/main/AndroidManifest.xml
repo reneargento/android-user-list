@@ -13,7 +13,7 @@
         android:usesCleartextTraffic="${usesCleartextTraffic}"
         android:theme="@style/Theme.RandomUser">
         <activity
-            android:name=".view.UserListActivity"
+            android:name=".view.user.list.UserListActivity"
             android:theme="@style/Theme.RandomUser.NoActionBar"
             android:exported="true">
             <intent-filter>

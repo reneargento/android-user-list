@@ -1,4 +1,4 @@
-package com.random.user.view
+package com.random.user.view.user.list
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
