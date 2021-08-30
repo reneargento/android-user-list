@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.random.user.R
 import com.random.user.databinding.UserListFragmentBinding
+import com.random.user.domain.UserDataStore
 import com.random.user.domain.UserRepository
 import com.random.user.domain.getDatabase
 import com.random.user.domain.getNetworkService
@@ -23,6 +24,14 @@ class UserListFragment : Fragment() {
     private var _binding: UserListFragmentBinding? = null
 
     private val binding get() = _binding!!
+
+    private val viewModel: UserListViewModel by viewModels {
+        val userNetwork = getNetworkService()
+        val userDatabase = getDatabase(requireActivity().baseContext)
+        val repository = UserRepository(userNetwork, userDatabase.userDao)
+        val userDataStore = UserDataStore(requireContext())
+        UserListViewModel.FACTORY(repository, userDataStore)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -36,26 +45,21 @@ class UserListFragment : Fragment() {
     }
 
     private fun initViewModel() {
-        val userNetwork = getNetworkService()
-        val userDatabase = getDatabase(requireActivity().baseContext)
-        val repository = UserRepository(userNetwork, userDatabase.userDao)
-        val viewModel: UserListViewModel by viewModels { UserListViewModel.FACTORY(repository) }
-
         initRecyclerView()
 
-        viewModel.spinnerLiveData.observe(this) { value ->
+        viewModel.spinnerLiveData.observe(viewLifecycleOwner) { value ->
             value.let { show ->
                 binding.spinner.visibility = if (show) View.VISIBLE else View.GONE
             }
         }
-        viewModel.snackBarLiveData.observe(this) { text ->
+        viewModel.snackBarLiveData.observe(viewLifecycleOwner) { text ->
             text?.let {
                 Snackbar.make(binding.root, text, Snackbar.LENGTH_SHORT).show()
                 viewModel.onSnackBarShown()
             }
         }
 
-        viewModel.userLiveData.observe(this) { userList ->
+        viewModel.userLiveData.observe(viewLifecycleOwner) { userList ->
             val mapper = UserDaoToViewMapper()
             userList?.let {
                 (binding.userList.adapter as UserAdapter).addItems(
@@ -83,6 +87,12 @@ class UserListFragment : Fragment() {
 //                                MapViewModel.LONGITUDE_PARAM to vehicle.longitude
                     )
                     findNavController().navigate(R.id.action_UserListFragment_to_UserDetailsFragment, bundle)
+                }
+            },
+            onUserDeletedListener = object : OnUserDeletedListener {
+                override fun onUserDeleted(email: String) {
+                 //   (binding.userList.adapter as UserAdapter).deleteUser(email)
+                    viewModel.deleteUser(email)
                 }
             }
         )

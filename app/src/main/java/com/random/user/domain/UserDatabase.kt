@@ -56,4 +56,7 @@ interface UserDao {
     fun userFilterLiveData(name: String,
                            surname: String,
                            email: String): LiveData<List<User>?>
+
+    @Query("delete from User where email = :email")
+    suspend fun deleteUser(email: String)
 }

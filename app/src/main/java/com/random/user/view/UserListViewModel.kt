@@ -1,11 +1,19 @@
 package com.random.user.view
 
 import androidx.lifecycle.*
+import com.random.user.domain.UserDataStore
 import com.random.user.domain.UserRepository
 import com.random.user.model.UserFetchError
+import com.random.user.util.viewModelFactory
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class UserListViewModel(private val repository: UserRepository) : ViewModel() {
+class UserListViewModel(private val repository: UserRepository,
+                        private val userDataStore: UserDataStore,
+                        ) : ViewModel() {
 
     companion object {
         val FACTORY = viewModelFactory(::UserListViewModel)
@@ -23,34 +31,35 @@ class UserListViewModel(private val repository: UserRepository) : ViewModel() {
         get() = snackBar
 
     fun fetchUsers() = loadUsers {
-        repository.queryUsers(USER_LIST_NUMBER)
+        val deletedUsers = userDataStore.deletedUsersFlow.first()
+        repository.queryUsers(USER_LIST_NUMBER, deletedUsers)
     }
 
     fun onSnackBarShown() {
         snackBar.value = null
     }
 
-    private fun loadUsers(block: suspend () -> Unit) {
+    fun deleteUser(email: String) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                repository.deleteUser(email)
+            }
+            snackBar.value = "User deleted"
+            userDataStore.updateDeletedUsers(email)
+        }
+    }
+
+    private fun loadUsers(loadUsersBlock: suspend () -> Unit) {
         viewModelScope.launch {
             try {
                 spinner.value = true
-                block()
+                withContext(Dispatchers.IO) {
+                    loadUsersBlock()
+                }
             } catch (error: UserFetchError) {
                 snackBar.value = error.message
             } finally {
                 spinner.value = false
-            }
-        }
-    }
-}
-
-fun <T : ViewModel, A> viewModelFactory(constructor: (A) -> T):
-            (A) -> ViewModelProvider.NewInstanceFactory {
-    return { arg: A ->
-        object : ViewModelProvider.NewInstanceFactory() {
-            @Suppress("UNCHECKED_CAST")
-            override fun <V : ViewModel> create(modelClass: Class<V>): V {
-                return constructor(arg) as V
             }
         }
     }
