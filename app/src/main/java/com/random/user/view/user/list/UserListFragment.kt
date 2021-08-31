@@ -26,6 +26,10 @@ class UserListFragment : Fragment() {
     private var _binding: UserListFragmentBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var linearLayoutManager: LinearLayoutManager
+    private val lastVisibleItemPosition: Int
+        get() = linearLayoutManager.findLastVisibleItemPosition()
+
     private val viewModel: UserListViewModel by viewModels {
         val userNetwork = getNetworkService()
         val userDatabase = getDatabase(requireActivity().baseContext)
@@ -63,22 +67,25 @@ class UserListFragment : Fragment() {
         viewModel.userLiveData.observe(viewLifecycleOwner) { userList ->
             userList?.let {
                 (binding.userList.adapter as UserAdapter).updateItems(
-                    userList.map { mapper.userDaoToView(it, requireContext()) }
+                    userList.map { mapper.userDaoToView(it) }
                 )
             }
         }
         viewModel.filteredUsersLiveDataObservable.observe(viewLifecycleOwner) {  userList ->
             userList?.let {
                 (binding.userList.adapter as UserAdapter).updateItems(
-                    userList.map { mapper.userDaoToView(it, requireContext()) }
+                    userList.map { mapper.userDaoToView(it) }
                 )
             }
         }
 
         binding.userList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (binding.search.text.isNullOrEmpty()
-                    && !recyclerView.canScrollVertically(1)) {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                val totalItemCount = recyclerView.layoutManager!!.itemCount
+                if (!viewModel.isRequestingUsers
+                    && binding.search.text.isNullOrEmpty()
+                    && totalItemCount == lastVisibleItemPosition + 1) {
                     viewModel.fetchUsers()
                 }
             }
@@ -113,7 +120,8 @@ class UserListFragment : Fragment() {
         )
 
         val layoutManager = LinearLayoutManager(binding.root.context)
-        binding.userList.layoutManager = LinearLayoutManager(binding.root.context)
+        linearLayoutManager = LinearLayoutManager(binding.root.context)
+        binding.userList.layoutManager = linearLayoutManager
         binding.userList.addItemDecoration(DividerItemDecoration(binding.root.context, layoutManager.orientation))
         binding.userList.adapter = userAdapter
     }

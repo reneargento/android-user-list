@@ -1,0 +1,76 @@
+{
+  "results": [
+    {
+      "gender": "female",
+      "name": {
+        "first": "Marjorie",
+        "last": "Alvarez"
+      },
+      "location": {
+        "street": {
+          "number": 3525,
+          "name": "W 6th St"
+        },
+        "city": "Bunbury",
+        "state": "Western Australia"
+      },
+      "email": "marjorie.alvarez@example.com",
+      "registered": {
+        "date": "2006-03-30T05:30:23.119Z"
+      },
+      "phone": "06-8995-6040",
+      "picture": {
+        "large": "https://randomuser.me/api/portraits/women/60.jpg",
+        "medium": "https://randomuser.me/api/portraits/med/women/60.jpg"
+      }
+    },
+    {
+      "gender": "male",
+      "name": {
+        "first": "Alejandro",
+        "last": "Perez"
+      },
+      "location": {
+        "street": {
+          "number": 8797,
+          "name": "Calle de La Almudena"
+        },
+        "city": "San Sebastián de Los Reyes",
+        "state": "Galicia"
+      },
+      "email": "alejandro.perez@example.com",
+      "registered": {
+        "date": "2014-02-04T22:18:16.602Z"
+      },
+      "phone": "912-410-367",
+      "picture": {
+        "large": "https://randomuser.me/api/portraits/men/73.jpg",
+        "medium": "https://randomuser.me/api/portraits/med/men/73.jpg"
+      }
+    },
+    {
+      "gender": "female",
+      "name": {
+        "first": "Margarethe",
+        "last": "Elmi"
+      },
+      "location": {
+        "street": {
+          "number": 3808,
+          "name": "Bekmansdijk"
+        },
+        "city": "Ampsen",
+        "state": "Limburg"
+      },
+      "email": "margarethe.elmi@example.com",
+      "registered": {
+        "date": "2014-05-11T11:40:18.063Z"
+      },
+      "phone": "(189)-059-3181",
+      "picture": {
+        "large": "https://randomuser.me/api/portraits/women/65.jpg",
+        "medium": "https://randomuser.me/api/portraits/med/women/65.jpg"
+      }
+    }
+  ]
+}
