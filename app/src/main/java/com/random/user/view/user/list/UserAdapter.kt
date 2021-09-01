@@ -10,7 +10,7 @@ class UserAdapter(
     private val onUserDeletedListener: OnUserDeletedListener
 ) : RecyclerView.Adapter<UserViewHolder>() {
 
-    private var userList: MutableList<UserView> = mutableListOf()
+    var userList: MutableList<UserView> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.user_content, parent, false)

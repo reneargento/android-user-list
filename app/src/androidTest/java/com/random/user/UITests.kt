@@ -15,8 +15,10 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import com.random.user.helper.ChildViewClick
+import com.random.user.helper.CustomMatchers
 import com.random.user.helper.RecyclerViewItemCountAssertion
 import com.random.user.view.user.list.UserListActivity
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -27,7 +29,7 @@ import java.io.File
 class UITests {
 
     companion object {
-        private const val IDLING_RESOURCE_NAME = "deleteUser"
+        private const val IDLING_RESOURCE_NAME = "dataLoad"
     }
     private var idlingResource: IdlingResource? = null
 
@@ -47,6 +49,7 @@ class UITests {
 
     @Test
     fun whenDataIsLoadedThenUsersAreShown() {
+        registerIdlingResource(3)
         onView(withId(R.id.user_list)).check(matches(isDisplayed()))
         onView(withId(R.id.user_list)).check(RecyclerViewItemCountAssertion(3))
         onView(withId(R.id.search)).check(matches(isDisplayed()))
@@ -55,6 +58,7 @@ class UITests {
 
     @Test
     fun whenUserIsSelectedNavigatesToUserDetails() {
+        registerIdlingResource(3)
         onView(withId(R.id.user_list))
             .perform(
                 actionOnItemAtPosition<RecyclerView.ViewHolder>(0,
@@ -74,7 +78,6 @@ class UITests {
         registerIdlingResource(2)
 
         onView(withId(R.id.user_list)).check(RecyclerViewItemCountAssertion(2))
-        IdlingRegistry.getInstance().unregister(idlingResource)
     }
 
     @Test
@@ -85,12 +88,17 @@ class UITests {
         registerIdlingResource(2)
         onView(withId(R.id.user_list)).check(RecyclerViewItemCountAssertion(2))
         IdlingRegistry.getInstance().unregister(idlingResource)
+
+        onView(withId(R.id.user_list))
+            .check(matches(CustomMatchers.withItemAtPositionAndEmail(0, "marjorie.alvarez@example.com")))
+        onView(withId(R.id.user_list))
+            .check(matches(CustomMatchers.withItemAtPositionAndEmail(1, "margarethe.elmi@example.com")))
     }
 
     private fun clearData() {
         InstrumentationRegistry.getInstrumentation().targetContext.deleteDatabase("users_db")
         File(
-            ApplicationProvider.getApplicationContext<Context>().filesDir, "settings"
+            ApplicationProvider.getApplicationContext<Context>().filesDir, "datastore"
         ).deleteRecursively()
     }
 
@@ -118,5 +126,10 @@ class UITests {
             }
         }
         IdlingRegistry.getInstance().register(idlingResource)
+    }
+
+    @After
+    fun teardown() {
+        IdlingRegistry.getInstance().unregister(idlingResource)
     }
 }
