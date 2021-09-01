@@ -5,19 +5,21 @@ import com.random.user.domain.User
 import com.random.user.domain.UserDataStore
 import com.random.user.domain.UserRepository
 import com.random.user.model.UserFetchError
-import com.random.user.util.viewModelFactory
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class UserListViewModel(private val repository: UserRepository,
-                        private val userDataStore: UserDataStore,
-                        private val coroutineDispatcher: CoroutineDispatcher = Dispatchers.IO
-                        ) : ViewModel() {
+@HiltViewModel
+class UserListViewModel @Inject constructor(
+    private val repository: UserRepository,
+    private val userDataStore: UserDataStore,
+    private val coroutineDispatcher: CoroutineDispatcher
+) : ViewModel() {
+
     companion object {
-        val FACTORY = viewModelFactory(::UserListViewModel)
         const val USER_LIST_NUMBER = 4
     }
 

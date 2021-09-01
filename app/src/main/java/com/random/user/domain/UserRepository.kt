@@ -3,11 +3,12 @@ package com.random.user.domain
 import androidx.lifecycle.LiveData
 import com.random.user.model.UserFetchError
 import kotlinx.coroutines.withTimeout
+import javax.inject.Inject
 
-class UserRepository(
+class UserRepository @Inject constructor(
     private val userNetwork: UserNetwork,
     private val userDao: UserDao,
-    private val userMapper: UserEntityToDaoMapper = UserEntityToDaoMapper()
+    private val userMapper: UserEntityToDaoMapper
 ) {
     val userLiveData: LiveData<List<User>?> = userDao.userLiveData
 

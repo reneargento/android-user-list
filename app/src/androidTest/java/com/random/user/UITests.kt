@@ -87,7 +87,6 @@ class UITests {
 
         registerIdlingResource(2)
         onView(withId(R.id.user_list)).check(RecyclerViewItemCountAssertion(2))
-        IdlingRegistry.getInstance().unregister(idlingResource)
 
         onView(withId(R.id.user_list))
             .check(matches(CustomMatchers.withItemAtPositionAndEmail(0, "marjorie.alvarez@example.com")))

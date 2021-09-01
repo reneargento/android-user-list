@@ -14,13 +14,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.random.user.R
 import com.random.user.databinding.UserListFragmentBinding
-import com.random.user.domain.UserDataStore
-import com.random.user.domain.UserRepository
-import com.random.user.domain.getDatabase
-import com.random.user.domain.getNetworkService
 import com.random.user.util.afterTextChanged
 import com.random.user.view.user.details.UserDetailsFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class UserListFragment : Fragment() {
 
     private var _binding: UserListFragmentBinding? = null
@@ -30,13 +28,7 @@ class UserListFragment : Fragment() {
     private val lastVisibleItemPosition: Int
         get() = linearLayoutManager.findLastVisibleItemPosition()
 
-    private val viewModel: UserListViewModel by viewModels {
-        val userNetwork = getNetworkService()
-        val userDatabase = getDatabase(requireActivity().baseContext)
-        val repository = UserRepository(userNetwork, userDatabase.userDao)
-        val userDataStore = UserDataStore(requireContext())
-        UserListViewModel.FACTORY(repository, userDataStore)
-    }
+    private val viewModel: UserListViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {

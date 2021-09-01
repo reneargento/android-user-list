@@ -8,7 +8,9 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.random.user.R
 import com.random.user.databinding.UserListActivityBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class UserListActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
