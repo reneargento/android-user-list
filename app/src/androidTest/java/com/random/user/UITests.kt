@@ -15,7 +15,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.random.user.helper.ChildViewClick
-import com.random.user.helper.CustomMatchers
+import com.random.user.helper.CustomMatchers.Companion.withItemAtPositionAndEmail
 import com.random.user.helper.RecyclerViewItemCountAssertion
 import com.random.user.view.user.list.UserListFragment
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -27,7 +27,9 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import com.random.user.helper.GetCurrentActivity.getCurrentActivity
+import com.random.user.helper.IdlingResourceHelper
 import com.random.user.hilt.launchFragmentInHiltContainer
+import com.random.user.mock.NetworkMockRule
 import org.hamcrest.CoreMatchers.`is`
 
 @HiltAndroidTest
@@ -51,7 +53,7 @@ class UITests {
     fun setup() {
         hiltRule.inject()
         launchUserListFragment()
-        registerIdlingResource(3)
+        registerIdlingResourceToWaitItems(3)
     }
 
     @Test
@@ -83,10 +85,10 @@ class UITests {
 
         // when
         onView(withId(R.id.user_list)).perform(
-            actionOnItemAtPosition<RecyclerView.ViewHolder>(1, ChildViewClick().clickChildViewWithId(R.id.delete_user)))
+            actionOnItemAtPosition<RecyclerView.ViewHolder>(1, ChildViewClick.clickChildViewWithId(R.id.delete_user)))
 
         // Waits until delete operation completes
-        registerIdlingResource(2)
+        registerIdlingResourceToWaitItems(2)
 
         // then
         onView(withId(R.id.user_list)).check(RecyclerViewItemCountAssertion(2))
@@ -101,40 +103,14 @@ class UITests {
         // when
         onView(withId(R.id.search)).perform(typeText("Ma"))
 
-        registerIdlingResource(2)
+        registerIdlingResourceToWaitItems(2)
         // then
         onView(withId(R.id.user_list)).check(RecyclerViewItemCountAssertion(2))
 
         onView(withId(R.id.user_list))
-            .check(matches(CustomMatchers.withItemAtPositionAndEmail(0, "marjorie.alvarez@example.com")))
+            .check(matches(withItemAtPositionAndEmail(0, "marjorie.alvarez@example.com")))
         onView(withId(R.id.user_list))
-            .check(matches(CustomMatchers.withItemAtPositionAndEmail(1, "margarethe.elmi@example.com")))
-    }
-
-    private fun registerIdlingResource(itemCount: Int) {
-        idlingResource = object : IdlingResource {
-            var resourceCallback: IdlingResource.ResourceCallback? = null
-
-            override fun getName() = IDLING_RESOURCE_NAME
-
-            override fun isIdleNow(): Boolean {
-                val activity = getCurrentActivity() ?: return false
-                val recyclerView: RecyclerView? = activity.findViewById(R.id.user_list)
-                val idle = recyclerView?.adapter?.itemCount == itemCount
-
-                resourceCallback?.let {
-                    if (idle) {
-                        it.onTransitionToIdle()
-                    }
-                }
-                return idle
-            }
-
-            override fun registerIdleTransitionCallback(callback: IdlingResource.ResourceCallback?) {
-                resourceCallback = callback
-            }
-        }
-        IdlingRegistry.getInstance().register(idlingResource)
+            .check(matches(withItemAtPositionAndEmail(1, "margarethe.elmi@example.com")))
     }
 
     private fun launchUserListFragment() {
@@ -143,11 +119,22 @@ class UITests {
             navController.setCurrentDestination(R.id.UserListFragment)
             this.viewLifecycleOwnerLiveData.observeForever { viewLifecycleOwner ->
                 if (viewLifecycleOwner != null) {
-                    // The fragment’s view has just been created
                     Navigation.setViewNavController(this.requireView(), navController)
                 }
             }
         }
+    }
+
+    private fun registerIdlingResourceToWaitItems(itemCount: Int) {
+        idlingResource = IdlingResourceHelper.createIdlingResource(IDLING_RESOURCE_NAME
+        ) { isIdle(itemCount) }
+        IdlingRegistry.getInstance().register(idlingResource)
+    }
+
+    private fun isIdle(itemCount: Int) : Boolean {
+        val activity = getCurrentActivity() ?: return false
+        val recyclerView: RecyclerView? = activity.findViewById(R.id.user_list)
+        return recyclerView?.adapter?.itemCount == itemCount
     }
 
     @After

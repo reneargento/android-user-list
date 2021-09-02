@@ -5,7 +5,7 @@ import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import org.hamcrest.Matcher
 
-class ChildViewClick {
+object ChildViewClick {
 
     fun clickChildViewWithId(id: Int): ViewAction {
         return object : ViewAction {

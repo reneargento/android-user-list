@@ -1,4 +1,4 @@
-package com.random.user
+package com.random.user.mock
 
 import androidx.test.platform.app.InstrumentationRegistry
 import okhttp3.mockwebserver.Dispatcher

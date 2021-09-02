@@ -1,4 +1,4 @@
-package com.random.user
+package com.random.user.mock
 
 import android.content.Context
 import com.random.user.di.DataStoreModule
