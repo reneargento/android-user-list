@@ -38,6 +38,7 @@ class UITests {
 
     companion object {
         private const val IDLING_RESOURCE_NAME = "dataLoad"
+        private const val USERS_DATABASE = "users_db"
     }
     private var idlingResource: IdlingResource? = null
 
@@ -51,7 +52,7 @@ class UITests {
 
     @Before
     fun setup() {
-        InstrumentationRegistry.getInstrumentation().targetContext.deleteDatabase("users_db")
+        InstrumentationRegistry.getInstrumentation().targetContext.deleteDatabase(USERS_DATABASE)
         hiltRule.inject()
         launchUserListFragment()
         registerIdlingResourceToWaitItems(3)
