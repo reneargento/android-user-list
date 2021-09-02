@@ -51,6 +51,7 @@ class UITests {
 
     @Before
     fun setup() {
+        InstrumentationRegistry.getInstrumentation().targetContext.deleteDatabase("users_db")
         hiltRule.inject()
         launchUserListFragment()
         registerIdlingResourceToWaitItems(3)
@@ -139,7 +140,6 @@ class UITests {
 
     @After
     fun teardown() {
-        InstrumentationRegistry.getInstrumentation().targetContext.deleteDatabase("users_db")
         IdlingRegistry.getInstance().unregister(idlingResource)
     }
 }
