@@ -1,7 +1,6 @@
 package com.random.user
 
 import androidx.test.platform.app.InstrumentationRegistry
-import com.random.user.model.ApiUrl
 import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -19,7 +18,6 @@ class NetworkMockRule : TestWatcher() {
 
         // Port must be constant to avoid connection issues when running consecutive tests
         mockWebServer.start(port)
-        ApiUrl.BASE_URL = mockWebServer.url("").toString()
         mockWebServer.dispatcher = getDispatcher()
     }
 

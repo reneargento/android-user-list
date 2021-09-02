@@ -1,8 +1,9 @@
 package com.random.user.domain
 
 import com.random.user.model.UserEntity
+import javax.inject.Inject
 
-class UserEntityToDaoMapper {
+class UserEntityToDaoMapper @Inject constructor() {
     fun userEntityToDao(userEntity: UserEntity) = User(
         userEntity.email,
         userEntity.gender,
