@@ -3,7 +3,7 @@ package com.random.user.mock
 import android.content.Context
 import com.random.user.di.DataStoreModule
 import com.random.user.di.UrlModule
-import com.random.user.domain.UserDataStore
+import com.random.user.data.UserDataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.android.qualifiers.ApplicationContext

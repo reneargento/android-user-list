@@ -1,6 +1,7 @@
 package com.random.user.domain
 
-import com.random.user.model.UserEntity
+import com.random.user.data.User
+import com.random.user.data.model.UserEntity
 import javax.inject.Inject
 
 class UserEntityToDaoMapper @Inject constructor() {

@@ -1,10 +1,10 @@
-package com.random.user.view.user.list
+package com.random.user.presentation.user.list
 
 import androidx.lifecycle.*
-import com.random.user.domain.User
-import com.random.user.domain.UserDataStore
-import com.random.user.domain.UserRepository
-import com.random.user.model.UserFetchError
+import com.random.user.data.User
+import com.random.user.data.UserDataStore
+import com.random.user.data.UserRepository
+import com.random.user.domain.UserFetchError
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.first

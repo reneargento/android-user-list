@@ -3,8 +3,12 @@ package com.random.user
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.nhaarman.mockitokotlin2.given
 import com.nhaarman.mockitokotlin2.mock
-import com.random.user.domain.*
-import com.random.user.model.*
+import com.random.user.data.User
+import com.random.user.data.UserDao
+import com.random.user.data.UserNetwork
+import com.random.user.data.UserRepository
+import com.random.user.data.model.*
+import com.random.user.domain.UserEntityToDaoMapper
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

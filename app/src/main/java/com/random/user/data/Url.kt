@@ -1,4 +1,4 @@
-package com.random.user.domain
+package com.random.user.data
 
 import javax.inject.Inject
 

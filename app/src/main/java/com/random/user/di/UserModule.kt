@@ -1,7 +1,9 @@
 package com.random.user.di
 
 import android.content.Context
-import com.random.user.domain.*
+import com.random.user.data.Url
+import com.random.user.data.UserNetwork
+import com.random.user.data.getDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

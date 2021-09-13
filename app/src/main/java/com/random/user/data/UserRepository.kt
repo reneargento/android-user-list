@@ -1,7 +1,8 @@
-package com.random.user.domain
+package com.random.user.data
 
 import androidx.lifecycle.LiveData
-import com.random.user.model.UserFetchError
+import com.random.user.domain.UserEntityToDaoMapper
+import com.random.user.domain.UserFetchError
 import kotlinx.coroutines.withTimeout
 import javax.inject.Inject
 

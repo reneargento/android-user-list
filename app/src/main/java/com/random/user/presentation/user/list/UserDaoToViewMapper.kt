@@ -1,7 +1,6 @@
-package com.random.user.view.user.list
+package com.random.user.presentation.user.list
 
-import android.content.Context
-import com.random.user.domain.User
+import com.random.user.data.User
 import java.util.*
 
 class UserDaoToViewMapper {

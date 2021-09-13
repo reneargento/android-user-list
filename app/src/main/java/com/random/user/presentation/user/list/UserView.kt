@@ -1,4 +1,4 @@
-package com.random.user.view.user.list
+package com.random.user.presentation.user.list
 
 class UserView(
     val email: String,

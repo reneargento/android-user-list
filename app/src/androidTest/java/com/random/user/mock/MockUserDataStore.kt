@@ -1,7 +1,7 @@
 package com.random.user.mock
 
 import android.content.Context
-import com.random.user.domain.UserDataStore
+import com.random.user.data.UserDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 

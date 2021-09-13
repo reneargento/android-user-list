@@ -4,9 +4,9 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
-import com.random.user.domain.UserDataStore
-import com.random.user.domain.UserRepository
-import com.random.user.view.user.list.UserListViewModel
+import com.random.user.data.UserDataStore
+import com.random.user.data.UserRepository
+import com.random.user.presentation.user.list.UserListViewModel
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import org.junit.Before

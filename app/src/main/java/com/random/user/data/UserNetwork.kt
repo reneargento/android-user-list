@@ -1,6 +1,6 @@
-package com.random.user.domain
+package com.random.user.data
 
-import com.random.user.model.UserListEntity
+import com.random.user.data.model.UserListEntity
 import retrofit2.http.GET
 import retrofit2.http.Query
 

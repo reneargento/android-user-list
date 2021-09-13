@@ -1,4 +1,4 @@
-package com.random.user.model
+package com.random.user.data.model
 
 data class LocationEntity(
     val street: StreetEntity,

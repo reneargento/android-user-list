@@ -1,6 +1,6 @@
 package com.random.user.di
 
-import com.random.user.domain.Url
+import com.random.user.data.Url
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
