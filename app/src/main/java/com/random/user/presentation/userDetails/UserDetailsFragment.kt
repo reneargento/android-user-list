@@ -1,4 +1,4 @@
-package com.random.user.presentation.user.details
+package com.random.user.presentation.userDetails
 
 import android.os.Bundle
 import android.view.LayoutInflater

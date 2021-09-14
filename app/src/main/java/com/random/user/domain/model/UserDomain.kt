@@ -1,6 +1,6 @@
-package com.random.user.presentation.user.list
+package com.random.user.domain.model
 
-class UserView(
+data class UserDomain(
     val email: String,
     val gender: String,
     val fullName: String,

@@ -1,10 +1,11 @@
-package com.random.user.presentation.user.list
+package com.random.user.presentation.list.adapter
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.random.user.R
 import com.random.user.databinding.UserContentBinding
+import com.random.user.presentation.list.UserView
 
 class UserViewHolder(
     root: View,

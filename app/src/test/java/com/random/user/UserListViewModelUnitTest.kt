@@ -6,7 +6,7 @@ import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import com.random.user.data.UserDataStore
 import com.random.user.data.UserRepository
-import com.random.user.presentation.user.list.UserListViewModel
+import com.random.user.presentation.list.viewModel.UserListViewModel
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import org.junit.Before
@@ -48,7 +48,7 @@ class UserListViewModelUnitTest {
         userListViewModel.fetchUsers()
 
         // then
-        verify(mockRepository).queryUsers(numberOfUsers, deletedUsers)
+        verify(mockRepository).fetchNewUsers(numberOfUsers, deletedUsers)
     }
 
     @Test

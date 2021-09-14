@@ -1,36 +1,30 @@
 package com.random.user.data
 
-import androidx.lifecycle.LiveData
-import com.random.user.domain.UserEntityToDaoMapper
+import com.random.user.data.model.UserListEntity
 import com.random.user.domain.UserFetchError
 import kotlinx.coroutines.withTimeout
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(
     private val userNetwork: UserNetwork,
-    private val userDao: UserDao,
-    private val userMapper: UserEntityToDaoMapper
+    private val userDao: UserDao
 ) {
-    val userLiveData: LiveData<List<User>?> = userDao.userLiveData
-
-    suspend fun queryUsers(numberOfUsers: Int, deletedUsers: Set<String>) {
+    suspend fun fetchNewUsers(numberOfUsers: Int) : UserListEntity {
         try {
-            val usersList = withTimeout(5000) {
+            return withTimeout(5000) {
                 userNetwork.fetchUsers(numberOfUsers)
             }
-            val filteredUsersList = usersList.results.filterNot { user ->
-                deletedUsers.contains(user.email)
-            }
-            userDao.insertUsers(filteredUsersList.map { userMapper.userEntityToDao(it) } )
         } catch (error: Exception) {
             throw UserFetchError("Unable to refresh vehicles", error)
         }
     }
 
+    suspend fun queryLocalUsers() = userDao.queryAllUsers()
+
     suspend fun deleteUser(email: String) {
         userDao.deleteUser(email)
     }
 
-    fun usersFilterLiveData(filter: String): LiveData<List<User>?> =
-        userDao.userFilterLiveData(filter)
+    fun queryUsersWithFilter(filter: String): List<User>? =
+        userDao.queryUsersWithFilter(filter)
 }

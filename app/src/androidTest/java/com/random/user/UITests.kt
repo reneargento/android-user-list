@@ -17,7 +17,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.random.user.helper.ChildViewClick
 import com.random.user.helper.CustomMatchers.Companion.withItemAtPositionAndEmail
 import com.random.user.helper.RecyclerViewItemCountAssertion
-import com.random.user.presentation.user.list.UserListFragment
+import com.random.user.presentation.list.UserListFragment
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.After

@@ -1,7 +1,6 @@
 package com.random.user.data
 
 import android.content.Context
-import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Database(entities = [User::class], version = 1, exportSchema = false)
@@ -46,14 +45,14 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUsers(item: List<User>)
 
-    @get:Query("select * from User")
-    val userLiveData: LiveData<List<User>?>
+    @Query("select * from User")
+    suspend fun queryAllUsers(): List<User>?
 
     @Query("SELECT * FROM User " +
             "WHERE name LIKE :filter || '%' " +
             "OR surname LIKE :filter || '%' " +
             "OR email LIKE :filter || '%'")
-    fun userFilterLiveData(filter: String): LiveData<List<User>?>
+    fun queryUsersWithFilter(filter: String): List<User>?
 
     @Query("delete from User where email = :email")
     suspend fun deleteUser(email: String)

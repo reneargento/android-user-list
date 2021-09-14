@@ -1,4 +1,4 @@
-package com.random.user.presentation.user.list
+package com.random.user.presentation.list
 
 import com.random.user.data.User
 import java.util.*

@@ -3,7 +3,7 @@ package com.random.user.helper
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.matcher.BoundedMatcher
-import com.random.user.presentation.user.list.UserAdapter
+import com.random.user.presentation.list.adapter.UserAdapter
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 

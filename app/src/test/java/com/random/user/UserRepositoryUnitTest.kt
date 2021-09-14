@@ -8,7 +8,7 @@ import com.random.user.data.UserDao
 import com.random.user.data.UserNetwork
 import com.random.user.data.UserRepository
 import com.random.user.data.model.*
-import com.random.user.domain.UserEntityToDaoMapper
+import com.random.user.data.mapper.UserEntityToDaoMapper
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -56,7 +56,7 @@ class UserRepositoryUnitTest {
         val filteredList = listOf(userList[0], userList[3])
 
         // when
-        userRepository.queryUsers(numberOfUsers, deletedUsers)
+        userRepository.fetchNewUsers(numberOfUsers, deletedUsers)
 
         // then
         Mockito.verify(mockUserNetwork).fetchUsers(numberOfUsers)

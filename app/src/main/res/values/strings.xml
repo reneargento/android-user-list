@@ -2,6 +2,7 @@
     <string name="app_name">RandomUser</string>
     <string name="image_description">Profile image</string>
     <string name="delete_description">Delete user</string>
+    <string name="user_deleted">User deleted</string>
     <string name="address_text">Address:</string>
     <string name="registered_date_text">Registered Date:</string>
     <string name="filter">Filter</string>

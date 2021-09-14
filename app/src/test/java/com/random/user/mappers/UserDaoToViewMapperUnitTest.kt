@@ -1,7 +1,7 @@
 package com.random.user.mappers
 
 import com.random.user.data.User
-import com.random.user.presentation.user.list.UserDaoToViewMapper
+import com.random.user.presentation.list.UserDaoToViewMapper
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Test

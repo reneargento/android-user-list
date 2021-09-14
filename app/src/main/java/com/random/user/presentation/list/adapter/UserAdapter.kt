@@ -1,16 +1,16 @@
-package com.random.user.presentation.user.list
+package com.random.user.presentation.list.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import com.random.user.R
+import com.random.user.presentation.list.UserView
 
 class UserAdapter(
     private val onItemClickListener: OnItemClickListener,
     private val onUserDeletedListener: OnUserDeletedListener
-) : RecyclerView.Adapter<UserViewHolder>() {
-
-    var userList: MutableList<UserView> = mutableListOf()
+) : ListAdapter<UserView, UserViewHolder>(UserCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.user_content, parent, false)
@@ -18,17 +18,22 @@ class UserAdapter(
     }
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
-        holder.bindData(userList[position])
+        holder.bindData(currentList[position])
         holder.itemView.setOnClickListener {
-            onItemClickListener.onItemClick(userList[position])
+            onItemClickListener.onItemClick(currentList[position])
         }
     }
 
-    override fun getItemCount() = userList.size
+    override fun getItemCount() = currentList.size
+}
 
-    fun updateItems(users: List<UserView>) {
-        userList = users.toMutableList()
-        notifyDataSetChanged()
+private class UserCallback : DiffUtil.ItemCallback<UserView>() {
+    override fun areItemsTheSame(oldItem: UserView, newItem: UserView): Boolean {
+        return oldItem.email == newItem.email
+    }
+
+    override fun areContentsTheSame(oldItem: UserView, newItem: UserView): Boolean {
+        return oldItem == newItem
     }
 }
 
