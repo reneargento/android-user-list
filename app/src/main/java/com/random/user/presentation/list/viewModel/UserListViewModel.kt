@@ -9,8 +9,9 @@ import com.random.user.domain.useCase.DeleteUserUseCase
 import com.random.user.domain.useCase.FetchNewUsersUseCase
 import com.random.user.domain.useCase.FilterLocalUsersUseCase
 import com.random.user.domain.useCase.QueryLocalUsersUseCase
-import com.random.user.presentation.list.UserView
+import com.random.user.presentation.list.model.UserView
 import com.random.user.presentation.userDetails.UserDetailsFragment
+import com.random.user.util.SingleLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
@@ -32,7 +33,7 @@ class UserListViewModel @Inject constructor(
     }
 
     private val userListViewState: MutableLiveData<UserListViewState> = MutableLiveData()
-    private val userListAction: MutableLiveData<UserListAction> = MutableLiveData()
+    private val userListAction: SingleLiveData<UserListAction> = SingleLiveData()
 
     val userListViewStateLiveData: LiveData<UserListViewState> = userListViewState
     val userListActionLiveData: LiveData<UserListAction> = userListAction

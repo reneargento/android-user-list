@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/UserListFragment"
-        android:name="com.random.user.presentation.list.UserListFragment"
+        android:name="com.random.user.presentation.list.view.UserListFragment"
         tools:layout="@layout/user_list_fragment">
 
         <action

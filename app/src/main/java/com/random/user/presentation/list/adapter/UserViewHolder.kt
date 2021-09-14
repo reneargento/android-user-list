@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.random.user.R
 import com.random.user.databinding.UserContentBinding
-import com.random.user.presentation.list.UserView
+import com.random.user.presentation.list.model.UserView
 
 class UserViewHolder(
     root: View,

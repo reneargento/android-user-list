@@ -1,7 +1,7 @@
 package com.random.user.domain.mapper
 
 import com.random.user.domain.model.UserDomain
-import com.random.user.presentation.list.UserView
+import com.random.user.presentation.list.model.UserView
 import javax.inject.Inject
 
 class UserDomainToUserViewMapper @Inject constructor() {

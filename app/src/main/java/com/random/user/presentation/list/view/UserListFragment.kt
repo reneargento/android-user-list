@@ -1,4 +1,4 @@
-package com.random.user.presentation.list
+package com.random.user.presentation.list.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.random.user.R
 import com.random.user.databinding.UserListFragmentBinding
+import com.random.user.presentation.list.model.UserView
 import com.random.user.presentation.list.adapter.OnItemClickListener
 import com.random.user.presentation.list.adapter.OnUserDeletedListener
 import com.random.user.presentation.list.adapter.UserAdapter

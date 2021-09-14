@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.random.user.R
-import com.random.user.presentation.list.UserView
+import com.random.user.presentation.list.model.UserView
 
 class UserAdapter(
     private val onItemClickListener: OnItemClickListener,
