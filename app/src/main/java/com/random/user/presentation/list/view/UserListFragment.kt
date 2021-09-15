@@ -62,7 +62,7 @@ class UserListFragment : Fragment() {
         binding.search.afterTextChanged { filter ->
             viewModel.filterUsers(filter)
         }
-        viewModel.fetchUsers()
+        viewModel.loadUsers()
     }
 
     private fun render(viewState: UserListViewState) {

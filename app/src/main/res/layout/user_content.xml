@@ -54,13 +54,13 @@
 
     <ImageButton
         android:id="@+id/delete_user"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
-        android:src="@mipmap/ic_delete_foreground"
+        android:src="@drawable/outline_delete_black_24"
         android:contentDescription="@string/delete_description" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

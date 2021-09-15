@@ -14,14 +14,11 @@ class UserAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.user_content, parent, false)
-        return UserViewHolder(view, onUserDeletedListener)
+        return UserViewHolder(view, onItemClickListener, onUserDeletedListener)
     }
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         holder.bindData(currentList[position])
-        holder.itemView.setOnClickListener {
-            onItemClickListener.onItemClick(currentList[position])
-        }
     }
 
     override fun getItemCount() = currentList.size

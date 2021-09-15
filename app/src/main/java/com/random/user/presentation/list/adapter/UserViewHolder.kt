@@ -9,6 +9,7 @@ import com.random.user.presentation.list.model.UserView
 
 class UserViewHolder(
     root: View,
+    private val onItemClickListener: OnItemClickListener,
     private val onUserDeletedListener: OnUserDeletedListener
 ) : RecyclerView.ViewHolder(root) {
 
@@ -22,6 +23,7 @@ class UserViewHolder(
             deleteUser.setOnClickListener {
                 onUserDeletedListener.onUserDeleted(userView.email)
             }
+            root.setOnClickListener{ onItemClickListener.onItemClick(userView) }
 
             Glide.with(root.context)
                 .load(userView.pictureMedium)
