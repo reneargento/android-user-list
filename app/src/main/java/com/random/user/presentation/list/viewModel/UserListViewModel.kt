@@ -5,7 +5,6 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.*
 import com.random.user.domain.UserFetchError
 import com.random.user.domain.mapper.UserDomainToUserViewMapper
-import com.random.user.domain.model.UserDomain
 import com.random.user.domain.useCase.DeleteUserUseCase
 import com.random.user.domain.useCase.FetchNewUsersUseCase
 import com.random.user.domain.useCase.FilterLocalUsersUseCase
@@ -39,7 +38,8 @@ class UserListViewModel @Inject constructor(
     val userListViewStateLiveData: LiveData<UserListViewState> = userListViewState
     val userListActionLiveData: LiveData<UserListAction> = userListAction
 
-    var isRequestingUsers = false
+    private var isRequestingUsers = false
+    private var filterApplied = ""
 
     init {
         userListViewState.value = UserListViewState.Initial
@@ -54,14 +54,15 @@ class UserListViewModel @Inject constructor(
     }
 
     fun loadUsers() {
+        if (filterApplied.isNotEmpty()) return
+
         viewModelScope.launch {
             try {
-                val userList : List<UserView>
                 withContext(coroutineDispatcher) {
                     isRequestingUsers = true
                     fetchNewUsersUseCase.execute(USER_LIST_NUMBER)
-                    userList = queryLocalUsers()
                 }
+                val userList = queryLocalUsers()
                 userListViewState.value = UserListViewState.Results(userList)
             } catch (error: UserFetchError) {
                 userListViewState.value = UserListViewState.Error(error.message)
@@ -73,18 +74,24 @@ class UserListViewModel @Inject constructor(
 
     fun deleteUser(email: String) {
         viewModelScope.launch {
-            val userList : List<UserView>
             withContext(coroutineDispatcher) {
                 deleteUserUseCase.execute(email)
-                userList = queryLocalUsers()
             }
+            val userList =
+                if (filterApplied.isEmpty())
+                    queryLocalUsers()
+                else
+                    filterLocalUsers(filterApplied)
             userListAction.value = UserListAction.DeleteUser(userList)
         }
     }
 
-    private suspend fun queryLocalUsers() = queryLocalUsersUseCase.execute()?.map {
-        userDomainToUserViewMapper.userDomainToUserViewMapper(it)
-    } ?: emptyList()
+    private suspend fun queryLocalUsers() =
+        withContext(coroutineDispatcher) {
+            queryLocalUsersUseCase.execute()?.map {
+                userDomainToUserViewMapper.userDomainToUserViewMapper(it)
+            } ?: emptyList()
+        }
 
     fun onUserClicked(user: UserView) {
         val bundle = bundleOf(
@@ -99,15 +106,18 @@ class UserListViewModel @Inject constructor(
     }
 
     fun filterUsers(filter: String) {
-        viewModelScope.launch {
-            val filteredUserList : List<UserView>
+        filterApplied = filter
 
-            withContext(coroutineDispatcher) {
-                filteredUserList = filterLocalUsersUseCase.execute(filter)?.map {
-                    userDomainToUserViewMapper.userDomainToUserViewMapper(it)
-                } ?: emptyList()
-            }
+        viewModelScope.launch {
+            val filteredUserList = filterLocalUsers(filter)
             userListViewState.value = UserListViewState.Results(filteredUserList)
         }
     }
+
+    private suspend fun filterLocalUsers(filter: String) =
+        withContext(coroutineDispatcher) {
+            filterLocalUsersUseCase.execute(filter)?.map {
+                userDomainToUserViewMapper.userDomainToUserViewMapper(it)
+            } ?: emptyList()
+        }
 }
