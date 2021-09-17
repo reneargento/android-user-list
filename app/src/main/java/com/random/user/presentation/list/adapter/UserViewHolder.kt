@@ -1,6 +1,7 @@
 package com.random.user.presentation.list.adapter
 
 import android.view.View
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.random.user.databinding.UserContentBinding
 import com.random.user.presentation.list.model.UserView
@@ -16,14 +17,16 @@ class UserViewHolder(
 
     fun bindData(userView: UserView) {
         with(vehicleViewBinding) {
+            val emailText = userView.email
             name.text = userView.fullName
-            email.text = userView.email
+            email.text = emailText
             phone.text = userView.phone
             deleteUser.setOnClickListener {
                 onUserDeletedListener.onUserDeleted(userView.email)
             }
-            root.setOnClickListener{ onItemClickListener.onItemClick(userView) }
+            root.setOnClickListener{ onItemClickListener.onItemClick(userView, image) }
             image.loadImage(root.context, userView.pictureMedium)
+            ViewCompat.setTransitionName(image, emailText)
         }
     }
 }

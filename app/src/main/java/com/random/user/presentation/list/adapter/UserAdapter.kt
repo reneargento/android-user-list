@@ -2,6 +2,7 @@ package com.random.user.presentation.list.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.random.user.R
@@ -35,7 +36,7 @@ private class UserCallback : DiffUtil.ItemCallback<UserView>() {
 }
 
 interface OnItemClickListener {
-    fun onItemClick(user: UserView)
+    fun onItemClick(user: UserView, imageView: ImageView)
 }
 
 interface OnUserDeletedListener {

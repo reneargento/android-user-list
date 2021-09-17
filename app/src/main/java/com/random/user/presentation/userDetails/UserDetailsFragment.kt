@@ -1,9 +1,12 @@
 package com.random.user.presentation.userDetails
 
+import android.os.Build
 import android.os.Bundle
+import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import com.random.user.databinding.UserDetailsFragmentBinding
 import com.random.user.util.loadImage
@@ -40,6 +43,7 @@ class UserDetailsFragment: Fragment() {
             userEmail = arguments?.getString(EMAIL_PARAM)
             userPicture = arguments?.getString(PICTURE_PARAM)
         }
+        sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -56,5 +60,10 @@ class UserDetailsFragment: Fragment() {
             userPicture?.let { image.loadImage(root.context, it) }
         }
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        ViewCompat.setTransitionName(binding.image, userEmail)
     }
 }

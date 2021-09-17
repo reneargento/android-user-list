@@ -4,8 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.core.view.ViewCompat
+import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -45,6 +49,7 @@ class UserListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
+        setupTransition(view)
     }
 
     private fun initViewModel() {
@@ -63,6 +68,14 @@ class UserListFragment : Fragment() {
             viewModel.filterUsers(filter)
         }
         viewModel.loadUsers()
+    }
+
+    private fun setupTransition(view: View) {
+        postponeEnterTransition()
+        binding.userList.doOnPreDraw {
+            // Start back transition after recycler view has been drawn.
+            startPostponedEnterTransition()
+        }
     }
 
     private fun render(viewState: UserListViewState) {
@@ -85,7 +98,7 @@ class UserListFragment : Fragment() {
                 displayUsers(action.users)
                 showUserDeletedMessage()
             }
-            is UserListAction.Navigate -> navigate(action.bundle)
+            is UserListAction.Navigate -> navigate(action.bundle, action.imageView)
         }
     }
 
@@ -109,15 +122,21 @@ class UserListFragment : Fragment() {
         Snackbar.make(binding.root, R.string.user_deleted, Snackbar.LENGTH_SHORT).show()
     }
 
-    private fun navigate(bundle: Bundle) {
-        findNavController().navigate(R.id.action_UserListFragment_to_UserDetailsFragment, bundle)
+    private fun navigate(bundle: Bundle, imageView: ImageView) {
+        val transitionName = ViewCompat.getTransitionName(imageView)
+        transitionName?.let {
+            val extras = FragmentNavigator.Extras.Builder()
+                .addSharedElement(imageView, it)
+                .build()
+            findNavController().navigate(R.id.action_UserListFragment_to_UserDetailsFragment, bundle, null, extras)
+        }
     }
 
     private fun initRecyclerView() {
         userAdapter = UserAdapter(
             onItemClickListener = object : OnItemClickListener {
-                override fun onItemClick(user: UserView) {
-                    viewModel.onUserClicked(user)
+                override fun onItemClick(user: UserView, imageView: ImageView) {
+                    viewModel.onUserClicked(user, imageView)
                 }
             },
             onUserDeletedListener = object : OnUserDeletedListener {
@@ -127,11 +146,13 @@ class UserListFragment : Fragment() {
             }
         )
 
-        val layoutManager = LinearLayoutManager(binding.root.context)
         linearLayoutManager = LinearLayoutManager(binding.root.context)
-        binding.userList.layoutManager = linearLayoutManager
-        binding.userList.addItemDecoration(DividerItemDecoration(binding.root.context, layoutManager.orientation))
-        binding.userList.adapter = userAdapter
+        binding.userList.apply {
+            layoutManager = linearLayoutManager
+            addItemDecoration(DividerItemDecoration(binding.root.context,
+                (layoutManager as LinearLayoutManager).orientation))
+            adapter = userAdapter
+        }
     }
 
     override fun onDestroyView() {

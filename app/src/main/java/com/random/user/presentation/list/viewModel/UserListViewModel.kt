@@ -1,6 +1,7 @@
 package com.random.user.presentation.list.viewModel
 
 import android.text.Editable
+import android.widget.ImageView
 import androidx.core.os.bundleOf
 import androidx.lifecycle.*
 import com.random.user.domain.UserFetchError
@@ -93,7 +94,7 @@ class UserListViewModel @Inject constructor(
             } ?: emptyList()
         }
 
-    fun onUserClicked(user: UserView) {
+    fun onUserClicked(user: UserView, imageView: ImageView) {
         val bundle = bundleOf(
             UserDetailsFragment.NAME_PARAM to user.fullName,
             UserDetailsFragment.GENDER_PARAM to user.gender,
@@ -102,7 +103,7 @@ class UserListViewModel @Inject constructor(
             UserDetailsFragment.EMAIL_PARAM to user.email,
             UserDetailsFragment.PICTURE_PARAM to user.pictureLarge,
         )
-        userListAction.value = UserListAction.Navigate(bundle)
+        userListAction.value = UserListAction.Navigate(bundle, imageView)
     }
 
     fun filterUsers(filter: String) {
