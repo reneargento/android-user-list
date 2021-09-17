@@ -2,10 +2,9 @@ package com.random.user.presentation.list.adapter
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.random.user.R
 import com.random.user.databinding.UserContentBinding
 import com.random.user.presentation.list.model.UserView
+import com.random.user.util.loadImage
 
 class UserViewHolder(
     root: View,
@@ -24,11 +23,7 @@ class UserViewHolder(
                 onUserDeletedListener.onUserDeleted(userView.email)
             }
             root.setOnClickListener{ onItemClickListener.onItemClick(userView) }
-
-            Glide.with(root.context)
-                .load(userView.pictureMedium)
-                .placeholder(R.mipmap.ic_placeholder)
-                .into(vehicleViewBinding.image)
+            image.loadImage(root.context, userView.pictureMedium)
         }
     }
 }

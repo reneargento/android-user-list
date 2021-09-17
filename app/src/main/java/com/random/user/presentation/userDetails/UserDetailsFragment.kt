@@ -5,9 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.bumptech.glide.Glide
-import com.random.user.R
 import com.random.user.databinding.UserDetailsFragmentBinding
+import com.random.user.util.loadImage
 
 class UserDetailsFragment: Fragment() {
 
@@ -54,10 +53,7 @@ class UserDetailsFragment: Fragment() {
             registeredDate.text = userRegisteredDate
             email.text = userEmail
 
-            Glide.with(root.context)
-                .load(userPicture)
-                .placeholder(R.mipmap.ic_placeholder)
-                .into(image)
+            userPicture?.let { image.loadImage(root.context, it) }
         }
         return binding.root
     }
