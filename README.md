@@ -22,6 +22,5 @@ Components used in this project:
 <b>MockWebServer</b> for mocking web server responses to local json files.
 
 <p align="center">
-  <img height="380" width="250" src="https://user-images.githubusercontent.com/3593362/131844516-a32d55e5-a018-4709-bcd5-a0f673cc7e62.png">
+  <img height="450" width="250" src="https://user-images.githubusercontent.com/3593362/133809484-13fa73f1-1ac8-4545-a0ce-bd549b73c784.png">
 </p>
-
