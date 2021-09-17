@@ -48,11 +48,11 @@ class UserListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initViewModel()
+        initViews()
         setupTransition(view)
     }
 
-    private fun initViewModel() {
+    private fun initViews() {
         initRecyclerView()
         viewModel.userListViewStateLiveData.observe(viewLifecycleOwner) { render(it) }
         viewModel.userListActionLiveData.observe(viewLifecycleOwner) { perform(it) }
@@ -67,12 +67,11 @@ class UserListFragment : Fragment() {
         binding.search.afterTextChanged { filter ->
             viewModel.filterUsers(filter)
         }
-        viewModel.loadUsers()
     }
 
     private fun setupTransition(view: View) {
         postponeEnterTransition()
-        binding.userList.doOnPreDraw {
+        (view.parent as? ViewGroup)?.doOnPreDraw {
             // Start back transition after recycler view has been drawn.
             startPostponedEnterTransition()
         }
@@ -86,9 +85,9 @@ class UserListFragment : Fragment() {
                 displayUsers(viewState.users)
             }
             is UserListViewState.Error -> {
+                hideLoading()
                 showErrorMessage(viewState.errorMessage)
             }
-            UserListViewState.Initial -> Unit
         }
     }
 

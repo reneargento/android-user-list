@@ -11,7 +11,7 @@ import com.random.user.domain.useCase.FetchNewUsersUseCase
 import com.random.user.domain.useCase.FilterLocalUsersUseCase
 import com.random.user.domain.useCase.QueryLocalUsersUseCase
 import com.random.user.presentation.list.model.UserView
-import com.random.user.presentation.userDetails.UserDetailsFragment
+import com.random.user.presentation.userDetails.view.UserDetailsFragment
 import com.random.user.util.SingleLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -44,6 +44,7 @@ class UserListViewModel @Inject constructor(
 
     init {
         userListViewState.value = UserListViewState.Initial
+        loadUsers()
     }
 
     fun onScroll(searchText: Editable?, totalItemCount: Int, lastVisibleItemPosition: Int) {
@@ -54,8 +55,9 @@ class UserListViewModel @Inject constructor(
         }
     }
 
-    fun loadUsers() {
+    private fun loadUsers() {
         if (filterApplied.isNotEmpty()) return
+        userListViewState.value = UserListViewState.Loading
 
         viewModelScope.launch {
             try {
