@@ -3,6 +3,15 @@
 Application that fetches a list of random users from a server and shows them in a list.  
 Tapping on a user navigates to the user details screen.
 
+Debug APK for the application can be found here:  
+https://drive.google.com/file/d/1pQGneJQg7SK2fysIrcMYjjn2ZfZkucBY/view?usp=sharing
+
+You can also download and install the app by scanning the QRCode below:
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/3593362/133911187-58ed3153-d3a4-4ec1-aa5d-f6ae2451c5ce.png" align="center" width=200>
+</p>
+
 ## Architecture
 The project's architecture is MVVM with Clean Architecture.
 
