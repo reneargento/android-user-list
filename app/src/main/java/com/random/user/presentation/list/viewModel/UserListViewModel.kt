@@ -1,6 +1,5 @@
 package com.random.user.presentation.list.viewModel
 
-import android.text.Editable
 import android.widget.ImageView
 import androidx.annotation.VisibleForTesting
 import androidx.core.os.bundleOf
