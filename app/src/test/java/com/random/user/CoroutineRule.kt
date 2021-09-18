@@ -1,11 +1,13 @@
 package com.random.user
 
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.*
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 
-class CoroutineRule(
+@ExperimentalCoroutinesApi
+class CoroutineRule constructor(
     private val testCoroutineDispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher()
 ) : TestWatcher(),
     TestCoroutineScope by TestCoroutineScope(testCoroutineDispatcher) {

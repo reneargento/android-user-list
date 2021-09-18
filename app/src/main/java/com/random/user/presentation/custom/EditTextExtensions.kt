@@ -1,4 +1,4 @@
-package com.random.user.util
+package com.random.user.presentation.custom
 
 import android.text.Editable
 import android.text.TextWatcher

@@ -1,4 +1,4 @@
-package com.random.user.mappers
+package com.random.user.data
 
 import com.random.user.data.model.*
 import com.random.user.data.mapper.UserEntityToDaoMapper
@@ -6,7 +6,7 @@ import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Test
 
-class UserEntityToDaoMapperUnitTest {
+class UserEntityToDaoMapperTest {
 
     private lateinit var userEntityToDaoMapper: UserEntityToDaoMapper
 
@@ -44,17 +44,17 @@ class UserEntityToDaoMapperUnitTest {
 
         // then
         with (userDao) {
-            assertEquals(this.email, email)
-            assertEquals(this.gender, gender)
-            assertEquals(this.name, name)
-            assertEquals(this.surname, surname)
-            assertEquals(this.street, "12 $street")
-            assertEquals(this.city, city)
-            assertEquals(this.state, state)
-            assertEquals(this.registered, registered)
-            assertEquals(this.phone, phone)
-            assertEquals(this.pictureLarge, pictureLarge)
-            assertEquals(this.pictureMedium, pictureMedium)
+            assertEquals(email, this.email)
+            assertEquals(gender, this.gender)
+            assertEquals(name, this.name)
+            assertEquals(surname, this.surname)
+            assertEquals("12 $street", this.street)
+            assertEquals(city, this.city)
+            assertEquals(state, this.state)
+            assertEquals(registered, this.registered)
+            assertEquals(phone, this.phone)
+            assertEquals(pictureLarge, this.pictureLarge)
+            assertEquals(pictureMedium, this.pictureMedium)
         }
     }
 }

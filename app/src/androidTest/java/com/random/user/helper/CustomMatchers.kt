@@ -14,7 +14,7 @@ class CustomMatchers {
             return object : BoundedMatcher<View, RecyclerView>(RecyclerView::class.java) {
                 override fun matchesSafely(item: RecyclerView?): Boolean {
                     val userAdapter = item?.adapter as UserAdapter
-                    return userAdapter.userList[position].email == email
+                    return userAdapter.currentList[position].email == email
                 }
 
                 override fun describeTo(description: Description?) {

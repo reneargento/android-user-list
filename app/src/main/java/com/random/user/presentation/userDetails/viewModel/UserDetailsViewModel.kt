@@ -8,7 +8,7 @@ class UserDetailsViewModel : ViewModel() {
     private val actionMutableLiveData = MutableLiveData<UserDetailsAction>()
     val actionLiveData = actionMutableLiveData
 
-    fun initView(genderText: String) {
+    fun computeGenderIcon(genderText: String) {
         if (genderText == "Male") {
             actionLiveData.value = UserDetailsAction.RenderMaleIcon
         } else {

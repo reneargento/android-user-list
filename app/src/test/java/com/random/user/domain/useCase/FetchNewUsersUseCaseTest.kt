@@ -1,29 +1,33 @@
-package com.random.user
+package com.random.user.domain.useCase
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.nhaarman.mockitokotlin2.given
-import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.*
+import com.random.user.CoroutineRule
 import com.random.user.data.User
 import com.random.user.data.UserDao
-import com.random.user.data.UserNetwork
+import com.random.user.data.UserDataStore
 import com.random.user.data.UserRepository
-import com.random.user.data.model.*
 import com.random.user.data.mapper.UserEntityToDaoMapper
+import com.random.user.data.model.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flow
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
-import org.mockito.Mockito
 
-class UserRepositoryUnitTest {
+@ExperimentalCoroutinesApi
+class FetchNewUsersUseCaseTest {
 
-    private val mockUserNetwork: UserNetwork = mock()
+    private val mockUserRepository: UserRepository = mock()
+
+    private val mockUserDataStore: UserDataStore = mock()
 
     private val mockUserDao: UserDao = mock()
 
     private val mockUserEntityToDaoMapper: UserEntityToDaoMapper = mock()
 
-    private lateinit var userRepository: UserRepository
+    private lateinit var fetchNewUsersUseCase: FetchNewUsersUseCase
 
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
@@ -33,34 +37,42 @@ class UserRepositoryUnitTest {
 
     @Before
     fun onSetup() {
-        userRepository = UserRepository(
-            mockUserNetwork,
+        fetchNewUsersUseCase = FetchNewUsersUseCase(
+            mockUserRepository,
+            mockUserDataStore,
             mockUserDao,
             mockUserEntityToDaoMapper
         )
     }
 
     @Test
-    fun `when users are queried then the filter is applied and the database is updated`()
-    = coroutineRule.runBlockingTest {
+    fun `when fetch new users use case is executed then users are fetched, filtered and inserted in the database`()
+            = coroutineRule.runBlockingTest {
         // given
         val numberOfUsers = 4
-        val deletedUsers = setOf("email2", "email3")
         val userEntityList = givenUserEntityList()
-        val userList = givenUserList(userEntityList.results)
-        given(mockUserNetwork.fetchUsers(numberOfUsers)).willReturn(userEntityList)
+        given(mockUserRepository.fetchNewUsers(numberOfUsers)).willReturn(userEntityList)
+
+        val userDaoList = givenUserDaoList(userEntityList.results)
         for ((index, user) in userEntityList.results.withIndex()) {
             given(mockUserEntityToDaoMapper.userEntityToDao(user))
-                .willReturn(userList[index])
+                .willReturn(userDaoList[index])
         }
-        val filteredList = listOf(userList[0], userList[3])
+
+        val deletedUsers = setOf("email2", "email3")
+        val deletedUsersFlow = flow {
+            emit(deletedUsers)
+        }
+        whenever(mockUserDataStore.deletedUsersFlow).thenReturn(deletedUsersFlow)
+
+        val filteredList = listOf(userDaoList[0], userDaoList[3])
 
         // when
-        userRepository.fetchNewUsers(numberOfUsers, deletedUsers)
+        fetchNewUsersUseCase.execute(numberOfUsers)
 
         // then
-        Mockito.verify(mockUserNetwork).fetchUsers(numberOfUsers)
-        Mockito.verify(mockUserDao).insertUsers(filteredList)
+        verify(mockUserRepository).fetchNewUsers(numberOfUsers)
+        verify(mockUserDao).insertUsers(filteredList)
     }
 
     private fun givenUserEntityList() =
@@ -95,7 +107,7 @@ class UserRepositoryUnitTest {
             pictureEntity)
     }
 
-    private fun givenUserList(userEntityList: List<UserEntity>) =
+    private fun givenUserDaoList(userEntityList: List<UserEntity>) =
         userEntityList.map { mapUserEntityToDao(it) }
 
     private fun mapUserEntityToDao(userEntity: UserEntity) =

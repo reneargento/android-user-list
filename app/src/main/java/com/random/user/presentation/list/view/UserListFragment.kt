@@ -24,7 +24,7 @@ import com.random.user.presentation.list.adapter.UserAdapter
 import com.random.user.presentation.list.viewModel.UserListAction
 import com.random.user.presentation.list.viewModel.UserListViewState
 import com.random.user.presentation.list.viewModel.UserListViewModel
-import com.random.user.util.afterTextChanged
+import com.random.user.presentation.custom.afterTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -61,7 +61,8 @@ class UserListFragment : Fragment() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 val totalItemCount = recyclerView.layoutManager!!.itemCount
-                viewModel.onScroll(binding.search.text, totalItemCount, lastVisibleItemPosition)
+                viewModel.onScroll(binding.search.text.toString(), totalItemCount,
+                    lastVisibleItemPosition)
             }
         })
         binding.search.afterTextChanged { filter ->

@@ -67,7 +67,7 @@ class UserDetailsFragment: Fragment() {
 
             userPicture?.let { image.loadImage(root.context, it) }
         }
-        userGender?.let { userDetailsViewModel.initView(it) }
+        userGender?.let { userDetailsViewModel.computeGenderIcon(it) }
         return binding.root
     }
 

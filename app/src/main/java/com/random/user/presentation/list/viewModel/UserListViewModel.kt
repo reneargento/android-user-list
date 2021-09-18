@@ -2,6 +2,7 @@ package com.random.user.presentation.list.viewModel
 
 import android.text.Editable
 import android.widget.ImageView
+import androidx.annotation.VisibleForTesting
 import androidx.core.os.bundleOf
 import androidx.lifecycle.*
 import com.random.user.domain.UserFetchError
@@ -12,7 +13,7 @@ import com.random.user.domain.useCase.FilterLocalUsersUseCase
 import com.random.user.domain.useCase.QueryLocalUsersUseCase
 import com.random.user.presentation.list.model.UserView
 import com.random.user.presentation.userDetails.view.UserDetailsFragment
-import com.random.user.util.SingleLiveData
+import com.random.user.presentation.custom.SingleLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
@@ -40,22 +41,22 @@ class UserListViewModel @Inject constructor(
     val userListActionLiveData: LiveData<UserListAction> = userListAction
 
     private var isRequestingUsers = false
-    private var filterApplied = ""
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    var filterApplied = ""
 
     init {
-        userListViewState.value = UserListViewState.Initial
         loadUsers()
     }
 
-    fun onScroll(searchText: Editable?, totalItemCount: Int, lastVisibleItemPosition: Int) {
+    fun onScroll(searchText: String, totalItemCount: Int, lastVisibleItemPosition: Int) {
         if (!isRequestingUsers
-            && searchText.isNullOrEmpty()
+            && searchText.isEmpty()
             && totalItemCount == lastVisibleItemPosition + 1) {
             loadUsers()
         }
     }
 
-    private fun loadUsers() {
+    fun loadUsers() {
         if (filterApplied.isNotEmpty()) return
         userListViewState.value = UserListViewState.Loading
 
