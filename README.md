@@ -46,6 +46,6 @@ Hilt was chosen as the framework to facilitate dependency injection through the 
 ## Screenshots
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/3593362/133809484-13fa73f1-1ac8-4545-a0ce-bd549b73c784.png" align="center" width=200>
+  <img src="https://user-images.githubusercontent.com/3593362/134750047-6e0f7acd-df8c-444b-a457-0996625135e7.png" align="center" width=200>
   <img src="https://user-images.githubusercontent.com/3593362/133910125-6debfe3f-c752-4d3a-ba24-34d14a42a618.png" align="center" width=200>
 </p>
