@@ -3,6 +3,15 @@
 Application that fetches a list of random users from a server and shows them in a list.  
 Tapping on a user navigates to the user details screen.
 
+Debug APK for the application can be found here:  
+https://drive.google.com/file/d/1pQGneJQg7SK2fysIrcMYjjn2ZfZkucBY/view?usp=sharing
+
+You can also download and install the app by scanning the QRCode below:
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/3593362/133911187-58ed3153-d3a4-4ec1-aa5d-f6ae2451c5ce.png" align="center" width=200>
+</p>
+
 ## Architecture
 The project's architecture is MVVM with Clean Architecture.
 
@@ -40,28 +49,3 @@ Hilt was chosen as the framework to facilitate dependency injection through the 
   <img src="https://user-images.githubusercontent.com/3593362/133809484-13fa73f1-1ac8-4545-a0ce-bd549b73c784.png" align="center" width=200>
   <img src="https://user-images.githubusercontent.com/3593362/133910125-6debfe3f-c752-4d3a-ba24-34d14a42a618.png" align="center" width=200>
 </p>
-
-# LICENSE
-```
-MIT License
-
-Copyright (c) 2021 Rene Argento
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
