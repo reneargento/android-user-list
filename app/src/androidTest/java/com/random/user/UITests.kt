@@ -63,7 +63,7 @@ class UITests {
         onView(withId(R.id.user_list)).check(matches(isDisplayed()))
         onView(withId(R.id.user_list)).check(RecyclerViewItemCountAssertion(3))
         onView(withId(R.id.search)).check(matches(isDisplayed()))
-        onView(withId(R.id.filter)).check(matches(withText("Filter")))
+        onView(withId(R.id.search)).check(matches(withHint("Filter")))
     }
 
     @Test
