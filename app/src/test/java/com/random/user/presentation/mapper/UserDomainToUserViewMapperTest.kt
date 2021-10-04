@@ -1,6 +1,7 @@
-package com.random.user.domain.mapper
+package com.random.user.presentation.mapper
 
 import com.random.user.domain.model.UserDomain
+import com.random.user.presentation.list.mapper.UserDomainToUserViewMapper
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test

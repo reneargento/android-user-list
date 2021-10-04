@@ -50,13 +50,13 @@ class UserListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initViews()
         setupTransition(view)
+
+        viewModel.userListViewStateLiveData.observe(viewLifecycleOwner) { render(it) }
+        viewModel.userListActionLiveData.observe(viewLifecycleOwner) { perform(it) }
     }
 
     private fun initViews() {
         initRecyclerView()
-        viewModel.userListViewStateLiveData.observe(viewLifecycleOwner) { render(it) }
-        viewModel.userListActionLiveData.observe(viewLifecycleOwner) { perform(it) }
-
         binding.userList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)

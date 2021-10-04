@@ -4,8 +4,8 @@ import android.widget.ImageView
 import androidx.annotation.VisibleForTesting
 import androidx.core.os.bundleOf
 import androidx.lifecycle.*
-import com.random.user.domain.UserFetchError
-import com.random.user.domain.mapper.UserDomainToUserViewMapper
+import com.random.user.data.model.UserFetchError
+import com.random.user.presentation.list.mapper.UserDomainToUserViewMapper
 import com.random.user.domain.useCase.DeleteUserUseCase
 import com.random.user.domain.useCase.FetchNewUsersUseCase
 import com.random.user.domain.useCase.FilterLocalUsersUseCase
@@ -34,9 +34,9 @@ class UserListViewModel @Inject constructor(
     }
 
     private val userListViewState: MutableLiveData<UserListViewState> = MutableLiveData()
-    private val userListAction: SingleLiveData<UserListAction> = SingleLiveData()
-
     val userListViewStateLiveData: LiveData<UserListViewState> = userListViewState
+
+    private val userListAction: SingleLiveData<UserListAction> = SingleLiveData()
     val userListActionLiveData: LiveData<UserListAction> = userListAction
 
     private var isRequestingUsers = false
@@ -103,7 +103,7 @@ class UserListViewModel @Inject constructor(
             UserDetailsFragment.ADDRESS_PARAM to user.address,
             UserDetailsFragment.REGISTERED_DATE_PARAM to user.registered,
             UserDetailsFragment.EMAIL_PARAM to user.email,
-            UserDetailsFragment.PICTURE_PARAM to user.pictureLarge,
+            UserDetailsFragment.PICTURE_PARAM to user.pictureLarge
         )
         userListAction.value = UserListAction.Navigate(bundle, imageView)
     }

@@ -1,4 +1,4 @@
-package com.random.user.data
+package com.random.user.data.mapper
 
 import com.random.user.data.model.*
 import com.random.user.data.mapper.UserEntityToDaoMapper

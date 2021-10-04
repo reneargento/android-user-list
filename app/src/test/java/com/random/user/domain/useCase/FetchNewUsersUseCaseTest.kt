@@ -52,17 +52,10 @@ class FetchNewUsersUseCaseTest {
         val numberOfUsers = 4
         val userEntityList = givenUserEntityList()
         given(mockUserRepository.fetchNewUsers(numberOfUsers)).willReturn(userEntityList)
-
         val userDaoList = givenUserDaoList(userEntityList.results)
-        for ((index, user) in userEntityList.results.withIndex()) {
-            given(mockUserEntityToDaoMapper.userEntityToDao(user))
-                .willReturn(userDaoList[index])
-        }
 
         val deletedUsers = setOf("email2", "email3")
-        val deletedUsersFlow = flow {
-            emit(deletedUsers)
-        }
+        val deletedUsersFlow = flow { emit(deletedUsers) }
         whenever(mockUserDataStore.deletedUsersFlow).thenReturn(deletedUsersFlow)
 
         val filteredList = listOf(userDaoList[0], userDaoList[3])
@@ -107,8 +100,15 @@ class FetchNewUsersUseCaseTest {
             pictureEntity)
     }
 
-    private fun givenUserDaoList(userEntityList: List<UserEntity>) =
-        userEntityList.map { mapUserEntityToDao(it) }
+    private fun givenUserDaoList(userEntityList: List<UserEntity>) : List<User> {
+        val userDaoList = userEntityList.map { mapUserEntityToDao(it) }
+
+        for ((index, user) in userEntityList.withIndex()) {
+            given(mockUserEntityToDaoMapper.userEntityToDao(user))
+                .willReturn(userDaoList[index])
+        }
+        return userDaoList
+    }
 
     private fun mapUserEntityToDao(userEntity: UserEntity) =
         User(userEntity.email, userEntity.gender,

@@ -3,8 +3,8 @@ package com.random.user.presentation
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.nhaarman.mockitokotlin2.*
 import com.random.user.CoroutineRule
-import com.random.user.domain.UserFetchError
-import com.random.user.domain.mapper.UserDomainToUserViewMapper
+import com.random.user.data.model.UserFetchError
+import com.random.user.presentation.list.mapper.UserDomainToUserViewMapper
 import com.random.user.domain.useCase.DeleteUserUseCase
 import com.random.user.domain.useCase.FetchNewUsersUseCase
 import com.random.user.domain.useCase.FilterLocalUsersUseCase

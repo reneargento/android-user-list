@@ -11,9 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.random.user.R
 import com.random.user.databinding.UserDetailsFragmentBinding
+import com.random.user.presentation.custom.loadImage
 import com.random.user.presentation.userDetails.viewModel.UserDetailsAction
 import com.random.user.presentation.userDetails.viewModel.UserDetailsViewModel
-import com.random.user.util.loadImage
 
 class UserDetailsFragment: Fragment() {
 

@@ -1,5 +1,6 @@
 package com.random.user.data
 
+import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.nhaarman.mockitokotlin2.mock
 import com.random.user.CoroutineRule
@@ -17,6 +18,8 @@ class UserRepositoryTest {
 
     private val mockUserDao: UserDao = mock()
 
+    private val mockContext: Context = mock()
+
     private lateinit var userRepository: UserRepository
 
     @get:Rule
@@ -29,7 +32,8 @@ class UserRepositoryTest {
     fun onSetup() {
         userRepository = UserRepository(
             mockUserNetwork,
-            mockUserDao
+            mockUserDao,
+            mockContext
         )
     }
 

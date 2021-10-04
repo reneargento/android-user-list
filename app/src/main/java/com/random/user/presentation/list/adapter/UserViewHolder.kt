@@ -4,8 +4,8 @@ import android.view.View
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.random.user.databinding.UserContentBinding
+import com.random.user.presentation.custom.loadImage
 import com.random.user.presentation.list.model.UserView
-import com.random.user.util.loadImage
 
 class UserViewHolder(
     root: View,
@@ -13,10 +13,10 @@ class UserViewHolder(
     private val onUserDeletedListener: OnUserDeletedListener
 ) : RecyclerView.ViewHolder(root) {
 
-    private val vehicleViewBinding = UserContentBinding.bind(root)
+    private val userViewBinding = UserContentBinding.bind(root)
 
     fun bindData(userView: UserView) {
-        with(vehicleViewBinding) {
+        with(userViewBinding) {
             val emailText = userView.email
             name.text = userView.fullName
             email.text = emailText
