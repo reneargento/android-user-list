@@ -1,9 +1,9 @@
 package com.random.user.di
 
 import android.content.Context
-import com.random.user.data.Url
-import com.random.user.data.UserNetwork
-import com.random.user.data.getDatabase
+import androidx.room.Room
+import com.random.user.data.*
+import com.random.user.presentation.custom.StringResources
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,12 +13,14 @@ import kotlinx.coroutines.Dispatchers
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object UserModule {
 
     @Provides
+    @Singleton
     fun provideRetrofit(
         url: Url
     ) : Retrofit {
@@ -31,13 +33,27 @@ object UserModule {
     }
 
     @Provides
+    @Singleton
     fun provideUserNetwork(
         retrofit: Retrofit
     ): UserNetwork = retrofit.create(UserNetwork::class.java)
 
     @Provides
-    fun provideUserDao(@ApplicationContext context: Context) = getDatabase(context).userDao
+    @Singleton
+    fun provideUserDatabase(@ApplicationContext context: Context) = Room.databaseBuilder(
+            context.applicationContext,
+            UserDatabase::class.java,
+            "users_db")
+        .fallbackToDestructiveMigration()
+        .build()
+
+    @Provides
+    @Singleton
+    fun provideUserDao(userDatabase: UserDatabase) = userDatabase.userDao
 
     @Provides
     fun provideCoroutineDispatcher() = Dispatchers.IO
+
+    @Provides
+    fun provideStringResources(@ApplicationContext context: Context) = StringResources(context)
 }

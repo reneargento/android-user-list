@@ -9,6 +9,7 @@ import com.random.user.domain.useCase.DeleteUserUseCase
 import com.random.user.domain.useCase.FetchNewUsersUseCase
 import com.random.user.domain.useCase.FilterLocalUsersUseCase
 import com.random.user.domain.useCase.QueryLocalUsersUseCase
+import com.random.user.presentation.custom.StringResources
 import com.random.user.presentation.list.model.UserView
 import com.random.user.presentation.list.viewModel.UserListAction
 import com.random.user.presentation.list.viewModel.UserListViewModel
@@ -34,6 +35,8 @@ class UserListViewModelTest {
 
     private val mockUserDomainToUserViewMapper: UserDomainToUserViewMapper = mock()
 
+    private val mockStringResources: StringResources = mock()
+
     private lateinit var userListViewModel: UserListViewModel
 
     @get:Rule
@@ -50,7 +53,8 @@ class UserListViewModelTest {
             mockFilterLocalUsersUseCase,
             mockDeleteUserUseCase,
             mockUserDomainToUserViewMapper,
-            TestCoroutineDispatcher()
+            TestCoroutineDispatcher(),
+            mockStringResources
         )
     }
 
@@ -116,7 +120,7 @@ class UserListViewModelTest {
             = coroutineRule.runBlockingTest {
         // given
         whenever(mockFetchNewUsersUseCase.execute(UserListViewModel.USER_LIST_NUMBER))
-            .thenThrow(UserFetchError("message", RuntimeException()))
+            .thenThrow(UserFetchError())
 
         // when
         userListViewModel.loadUsers()

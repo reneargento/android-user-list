@@ -1,4 +1,4 @@
-package com.random.user.domain.mapper
+package com.random.user.data.mapper
 
 import com.random.user.data.User
 import com.random.user.domain.model.UserDomain

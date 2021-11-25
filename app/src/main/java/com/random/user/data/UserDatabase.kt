@@ -1,29 +1,10 @@
 package com.random.user.data
 
-import android.content.Context
 import androidx.room.*
 
 @Database(entities = [User::class], version = 1, exportSchema = false)
 abstract class UserDatabase: RoomDatabase() {
     abstract val userDao: UserDao
-}
-
-private lateinit var INSTANCE: UserDatabase
-
-fun getDatabase(context: Context): UserDatabase {
-    synchronized(UserDatabase::class) {
-        if (!::INSTANCE.isInitialized) {
-            INSTANCE = Room
-                .databaseBuilder(
-                    context.applicationContext,
-                    UserDatabase::class.java,
-                    "users_db"
-                )
-                .fallbackToDestructiveMigration()
-                .build()
-        }
-    }
-    return INSTANCE
 }
 
 @Entity

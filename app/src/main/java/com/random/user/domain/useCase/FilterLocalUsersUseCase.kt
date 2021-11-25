@@ -1,15 +1,10 @@
 package com.random.user.domain.useCase
 
-import com.random.user.data.UserRepository
-import com.random.user.domain.mapper.UserDaoToUserDomainMapper
+import com.random.user.domain.UserRepository
 import javax.inject.Inject
 
 class FilterLocalUsersUseCase @Inject constructor(
-    private val userRepository: UserRepository,
-    private val userDaoToUserDomainMapper: UserDaoToUserDomainMapper
+    private val userRepository: UserRepository
 ) {
-
-    fun execute(filter: String) = userRepository.queryUsersWithFilter(filter)?.map {
-        userDaoToUserDomainMapper.userDaoToUserDomain(it)
-    }
+    fun execute(filter: String) = userRepository.queryUsersWithFilter(filter)
 }

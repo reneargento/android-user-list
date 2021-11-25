@@ -22,19 +22,19 @@
         app:strokeWidth="1dp"
         android:contentDescription="@string/image_description" />
 
-    <com.random.user.presentation.custom.MontserratTextViewBold
+    <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:textSize="18sp"
-        android:textStyle="bold"
+        android:fontFamily="@font/montserrat_bold"
         app:layout_constraintStart_toEndOf="@id/image"
         app:layout_constraintTop_toTopOf="@id/image"
         tools:text="Rene Argento" />
 
-    <com.random.user.presentation.custom.MontserratTextView
+    <TextView
         android:id="@+id/email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -42,9 +42,10 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintTop_toBottomOf="@+id/name"
         app:layout_constraintStart_toStartOf="@id/name"
+        android:fontFamily="@font/montserrat"
         tools:text="r.a@email.com" />
 
-    <com.random.user.presentation.custom.MontserratTextView
+    <TextView
         android:id="@+id/phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -52,6 +53,7 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintTop_toBottomOf="@+id/email"
         app:layout_constraintStart_toStartOf="@id/name"
+        android:fontFamily="@font/montserrat"
         tools:text="12345678" />
 
     <ImageButton

@@ -1,7 +1,6 @@
 package com.random.user.data.mapper
 
 import com.random.user.data.model.*
-import com.random.user.data.mapper.UserEntityToDaoMapper
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Test

@@ -3,8 +3,7 @@ package com.random.user.domain.useCase
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.nhaarman.mockitokotlin2.*
 import com.random.user.CoroutineRule
-import com.random.user.data.UserRepository
-import com.random.user.domain.mapper.UserDaoToUserDomainMapper
+import com.random.user.domain.UserRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
 import org.junit.Rule
@@ -15,8 +14,6 @@ import org.junit.rules.TestRule
 class QueryLocalUsersUseCaseTest {
 
     private val mockUserRepository: UserRepository = mock()
-
-    private val mockUserDaoToUserDomainMapper: UserDaoToUserDomainMapper = mock()
 
     private lateinit var queryLocalUsersUseCase: QueryLocalUsersUseCase
 
@@ -29,8 +26,7 @@ class QueryLocalUsersUseCaseTest {
     @Before
     fun onSetup() {
         queryLocalUsersUseCase = QueryLocalUsersUseCase(
-            mockUserRepository,
-            mockUserDaoToUserDomainMapper
+            mockUserRepository
         )
     }
 

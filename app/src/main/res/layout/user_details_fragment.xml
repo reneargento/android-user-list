@@ -20,7 +20,7 @@
         app:strokeWidth="1dp"
         android:contentDescription="@string/image_description" />
 
-    <com.random.user.presentation.custom.MontserratTextViewBold
+    <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/image"
-        android:textStyle="bold"
+        android:fontFamily="@font/montserrat_bold"
         android:textSize="24sp"
         tools:text="Rene Argento" />
 
@@ -55,13 +55,14 @@
         android:src="@drawable/email"
         android:contentDescription="@string/filter" />
 
-    <com.random.user.presentation.custom.MontserratTextView
+    <TextView
         android:id="@+id/email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         app:layout_constraintStart_toEndOf="@+id/email_icon"
         app:layout_constraintTop_toTopOf="@id/email_icon"
+        android:fontFamily="@font/montserrat"
         tools:text="r.a@email.com" />
 
     <ImageView
@@ -75,7 +76,7 @@
         android:src="@drawable/address"
         android:contentDescription="@string/address" />
 
-    <com.random.user.presentation.custom.MontserratTextView
+    <TextView
         android:id="@+id/address"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -84,6 +85,7 @@
         app:layout_constraintStart_toEndOf="@id/address_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/address_icon"
+        android:fontFamily="@font/montserrat"
         android:maxLines="2"
         tools:text="Street 1, Barcelona, Spain" />
 
@@ -98,12 +100,13 @@
         android:src="@drawable/date"
         android:contentDescription="@string/registered_date" />
 
-    <com.random.user.presentation.custom.MontserratTextView
+    <TextView
         android:id="@+id/registered_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         app:layout_constraintStart_toEndOf="@id/date_icon"
         app:layout_constraintTop_toTopOf="@id/date_icon"
+        android:fontFamily="@font/montserrat"
         tools:text="2021-08-30" />
 </androidx.constraintlayout.widget.ConstraintLayout>

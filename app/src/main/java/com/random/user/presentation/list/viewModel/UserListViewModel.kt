@@ -13,6 +13,7 @@ import com.random.user.domain.useCase.QueryLocalUsersUseCase
 import com.random.user.presentation.list.model.UserView
 import com.random.user.presentation.userDetails.view.UserDetailsFragment
 import com.random.user.presentation.custom.SingleLiveData
+import com.random.user.presentation.custom.StringResources
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
@@ -26,7 +27,8 @@ class UserListViewModel @Inject constructor(
     private val filterLocalUsersUseCase: FilterLocalUsersUseCase,
     private val deleteUserUseCase: DeleteUserUseCase,
     private val userDomainToUserViewMapper: UserDomainToUserViewMapper,
-    private val coroutineDispatcher: CoroutineDispatcher
+    private val coroutineDispatcher: CoroutineDispatcher,
+    private val stringResources: StringResources
 ) : ViewModel() {
 
     companion object {
@@ -68,7 +70,8 @@ class UserListViewModel @Inject constructor(
                 val userList = queryLocalUsers()
                 userListViewState.value = UserListViewState.Results(userList)
             } catch (error: UserFetchError) {
-                userListViewState.value = UserListViewState.Error(error.message)
+                userListViewState.value =
+                    UserListViewState.Error(stringResources.getUserFetchErrorMessage())
             } finally {
                 isRequestingUsers = false
             }

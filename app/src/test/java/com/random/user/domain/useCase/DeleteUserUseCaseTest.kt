@@ -3,8 +3,7 @@ package com.random.user.domain.useCase
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.nhaarman.mockitokotlin2.*
 import com.random.user.CoroutineRule
-import com.random.user.data.UserDataStore
-import com.random.user.data.UserRepository
+import com.random.user.domain.UserRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
 import org.junit.Rule
@@ -16,8 +15,6 @@ class DeleteUserUseCaseTest {
 
     private val mockUserRepository: UserRepository = mock()
 
-    private val mockUserDataStore: UserDataStore = mock()
-
     private lateinit var deleteUserUseCase: DeleteUserUseCase
 
     @get:Rule
@@ -28,7 +25,7 @@ class DeleteUserUseCaseTest {
 
     @Before
     fun onSetup() {
-        deleteUserUseCase = DeleteUserUseCase(mockUserRepository, mockUserDataStore)
+        deleteUserUseCase = DeleteUserUseCase(mockUserRepository)
     }
 
     @Test
@@ -42,6 +39,5 @@ class DeleteUserUseCaseTest {
 
         // then
         verify(mockUserRepository).deleteUser(email)
-        verify(mockUserDataStore).updateDeletedUsers(email)
     }
 }
